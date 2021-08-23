@@ -1,0 +1,42 @@
+
+```{r message=FALSE, warning=FALSE}
+# load libraries and data
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+data <- read_csv("model/overfit/data.csv")
+```
+
+```{r}
+head(data)
+```
+
+```{r}
+lossPlot <- ggplot(data=data, aes(x=as.numeric(row.names(data)), y=val_loss)) +
+        geom_point() +
+        geom_line() +
+        ggtitle("Loss vs. Epochs") +
+        xlab("Epochs") +
+        ylab("Loss")
+
+lossPlot
+```
+
+```{r}
+accuracyPlot <- ggplot(data=data, aes(x=as.numeric(row.names(data)), y=val_binary_accuracy)) +
+        geom_point() +
+        geom_line() +
+        ggtitle("Accuracy vs. Epochs") +
+        xlab("Epochs") +
+        ylab("Accuracy")
+
+accuracyPlot
+```
+
+```{r}
+
+ggsave(filename="model/overfit/plots/loss.png", plot=lossPlot)
+
+ggsave(filename="model/overfit/plots/accuracy.png", plot=accuracyPlot)
+```

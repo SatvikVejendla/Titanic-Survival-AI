@@ -1,0 +1,121 @@
+
+```{r message=FALSE, warning=FALSE}
+# load libraries and data
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+data <- read_csv("data/raw/train.csv")
+```
+
+```{r}
+data <- data %>% select(-Name, -Ticket)
+head(data)
+```
+
+```{r}
+summary(data)
+```
+
+```{r}
+sum(is.na(data))
+```
+
+
+#NA Values
+```{r}
+categories = names(data)
+naDF = data.frame(matrix(NA, nrow = 1, ncol = 10))
+
+names(naDF) = c("Categories", "NAValues", "Total")
+index <- 1
+
+for(i in categories){
+       naDF[index,1] = i
+       naDF[index,2] = sum(is.na(data[i]))
+       naDF[index,3] = count(data[i])
+
+       index <- index + 1
+}
+
+
+naViz <- ggplot(data=naDF, aes(x=Categories)) +
+       geom_bar(aes(y=NAValues), stat = "identity", alpha = 0.5,fill="blue") +
+       geom_bar(aes(y=Total), stat="identity", alpha=0.4, fill="red") +
+       ggtitle("NA Values Distribution")
+naViz
+```
+
+#Distributions
+```{r}
+# Add labels as specified
+viz <- ggplot(data = data, aes(x = Sex, group=Survived, fill=Survived)) +
+       geom_histogram(stat="count") +
+       ggtitle("Gender Survival Rate Distribution")
+
+women <- data[data["Sex"] == 'female',]["Survived"]    
+rate_women <- sum(women)/count(women)
+rate_women = (unlist(list(rate_women))) * 100
+men <- data[data["Sex"] == 'male',]["Survived"]
+rate_men <- sum(men)/count(men)
+rate_men = (unlist(list(rate_men))) * 100
+
+viz
+
+paste("Survival Rate of Women: ", rate_women, "%. Survival Rate of Men: ", rate_men, "%.", sep="")
+
+```
+
+
+```{r}
+viz2 <- ggplot(data=data, aes(x=Age, group=Survived, fill=Survived)) +
+       geom_histogram(position="stack") +
+       ggtitle("Age Survival Rate Distribution")
+# Prints the plot
+viz2
+```
+
+
+```{r}
+
+viz3 <- ggplot(data=data, aes(x=Pclass, group=Survived, fill=Survived)) +
+       geom_histogram(position="stack", binwidth=1, color="black") +
+       ggtitle("PClass Survival Rate Distribution")
+# Prints the plot
+viz3
+```
+
+```{r}
+
+viz4 <- ggplot(data=data, aes(x=Fare, group=Survived, fill=Survived)) +
+       geom_histogram(position="stack", binwidth=10, color="black") +
+       ggtitle("Fare Survival Rate Distribution")
+# Prints the plot
+viz4
+```
+
+```{r}
+
+viz5 <- ggplot(data = data, aes(x = Embarked, group=Survived, fill=Survived)) +
+       geom_histogram(stat="count") +
+       ggtitle("Embarkment Location + Survival Rate Distribution")
+
+viz5
+```
+
+
+```{r}
+
+
+viz6 <- ggplot(data=data, aes(x=Survived)) +
+       geom_histogram(binwidth=1, fill="lightblue", color="black") +
+       ggtitle("Survived Distribution")
+# Prints the plot
+viz6
+```
+
+#ALL PLOTS
+```{r}
+
+grid.arrange(naViz, viz, viz2, viz3, viz4, viz5, viz6, ncol = 2)
+```
