@@ -67,12 +67,12 @@ Each file and its purpose in this project (in chronological order).
 
 |FileName|Purpose|
 |--------|-------|
-|[raw_data.rmd](./raw_data.rmd?raw=true)|Analysing the raw dataset|
-|[clean.py](./clean.py?raw=true)|Cleans the dataset by removing NA values and unnecessary features|
-|[processed_data.rmd](./processed_data.rmd?raw=true)|Analysing the processed data|
-|[overfit.py](./overfit.py?raw=true)|Creating a model that intentionally overfits the data|
-|[overfit.rmd](./overfit.rmd?raw=true)|Analysing the performance of the model throughout epochs|
-|[optimal.py](./optimal.py?raw=true)|Creating a model with the optimal number of epochs|
+|[raw_data.rmd](./raw_data.rmd)|Analysing the raw dataset|
+|[clean.py](./clean.py)|Cleans the dataset by removing NA values and unnecessary features|
+|[processed_data.rmd](./processed_data.rmd)|Analysing the processed data|
+|[overfit.py](./overfit.py)|Creating a model that intentionally overfits the data|
+|[overfit.rmd](./overfit.rmd)|Analysing the performance of the model throughout epochs|
+|[optimal.py](./optimal.py)|Creating a model with the optimal number of epochs|
 
 The "data/raw" directory contains all the raw data. The "data/processed" directory contains all the data after processing it.
 
